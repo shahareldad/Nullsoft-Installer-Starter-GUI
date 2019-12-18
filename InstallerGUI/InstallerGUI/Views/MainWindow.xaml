@@ -64,9 +64,9 @@
             <TabItem Header="Registry">
                 <ContentControl Content="{Binding RegistryViewModel}" />
             </TabItem>
-            <TabItem Header="Pages">
+            <!--<TabItem Header="Pages">
                 <ContentControl Content="{Binding PagesViewModel}" />
-            </TabItem>
+            </TabItem>-->
         </TabControl>
     </Grid>
 </Window>

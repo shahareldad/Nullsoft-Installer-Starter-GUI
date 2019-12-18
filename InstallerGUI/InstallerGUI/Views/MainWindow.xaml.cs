@@ -19,6 +19,9 @@ namespace InstallerGUI.Views
         private string MainWindow_GetFilenameToSaveEvent()
         {
             var dialog = new OpenFileDialog();
+            dialog.CheckFileExists = false;
+            dialog.AddExtension = true;
+            dialog.DefaultExt = "nsi";
             var result = dialog.ShowDialog();
             if (result.HasValue)
                 return dialog.FileName;

@@ -1,5 +1,6 @@
 ﻿using InstallerGUI.Contracts;
 using InstallerGUI.Infrastructure;
+using System;
 using System.IO;
 using System.Text;
 using System.Windows.Input;
@@ -38,6 +39,12 @@ namespace InstallerGUI.ViewModels
         private void CreateNsiFileCommandAction()
         {
             var sb = new StringBuilder();
+
+            if (RegistryViewModel.RegistrySectionNeeded)
+            {
+                sb.Append("!include Registry.nsh" + Environment.NewLine + Environment.NewLine);
+            }
+
             sb.Append(GeneralViewModel.GetDataToNsi());
             sb.Append(PagesViewModel.GetDataToNsi());
             sb.Append(SectionsViewModel.GetDataToNsi());

@@ -65,6 +65,7 @@
     <Compile Include="Contracts\IHoldGeneralInformation.cs" />
     <Compile Include="Contracts\IRequestOpenFileExplorer.cs" />
     <Compile Include="Infrastructure\CommandAction.cs" />
+    <Compile Include="Models\RegistryModel.cs" />
     <Compile Include="ViewModels\PagesViewModel.cs" />
     <Compile Include="ViewModels\SectionsViewModel.cs" />
     <Compile Include="Views\FilesView.xaml.cs">

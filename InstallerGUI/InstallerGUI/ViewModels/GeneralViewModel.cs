@@ -153,18 +153,18 @@ namespace InstallerGUI.ViewModels
         {
             var sb = new StringBuilder();
             sb.Append("; The name of the installer" + Environment.NewLine);
-            sb.Append("Name \"" + ApplcationName + "\"" + Environment.NewLine);
+            sb.Append("Name \"" + ApplcationName + "\"" + Environment.NewLine + Environment.NewLine);
             sb.Append(";Version Information" + Environment.NewLine);
             sb.Append("VIProductVersion \"" + ProductVersion + "\"" + Environment.NewLine);
             sb.Append("VIAddVersionKey \"ProductName\" \"" + ProductName + "\"" + Environment.NewLine);
             sb.Append("VIAddVersionKey \"CompanyName\" \"" + CompanyName + "\"" + Environment.NewLine);
             sb.Append("VIAddVersionKey \"FileVersion\" \"" + FileVersion + "\"" + Environment.NewLine);
             sb.Append("VIAddVersionKey \"FileDescription\" \"" + FileDescription + "\"" + Environment.NewLine);
-            sb.Append("VIAddVersionKey \"LegalCopyright\" \"" + LegalCopyright + "\"" + Environment.NewLine);
+            sb.Append("VIAddVersionKey \"LegalCopyright\" \"" + LegalCopyright + "\"" + Environment.NewLine + Environment.NewLine);
             sb.Append("; The file to write" + Environment.NewLine);
-            sb.Append("OutFile \"" + OutputFilename + "\"" + Environment.NewLine);
+            sb.Append("OutFile \"" + OutputFilename + "\"" + Environment.NewLine + Environment.NewLine);
             sb.Append("; The default installation directory" + Environment.NewLine);
-            sb.Append("InstallDir \"" + DestinationFolder + "\"" + Environment.NewLine);
+            sb.Append("InstallDir \"" + DestinationFolder + "\"" + Environment.NewLine + Environment.NewLine);
             sb.Append("; Request application privileges for Windows Vista" + Environment.NewLine);
             sb.Append("RequestExecutionLevel admin" + Environment.NewLine + Environment.NewLine);
 

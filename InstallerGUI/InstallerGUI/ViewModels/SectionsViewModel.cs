@@ -19,12 +19,14 @@ namespace InstallerGUI.ViewModels
         {
             var sb = new StringBuilder();
 
-            sb.Append((_fileHandler as IGetDataToNsi).GetDataToNsi());
-            sb.Append((_registryHandler as IGetDataToNsi).GetDataToNsi());
+            sb.Append(_fileHandler.GetDataToNsi());
+            sb.Append(_registryHandler.GetDataToNsi());
 
             sb.Append("; Uninstaller" + Environment.NewLine);
             sb.Append("Section \"Uninstall\"" + Environment.NewLine);
-            sb.Append(@"    Delete $INSTDIR\*.*" + Environment.NewLine);
+            sb.Append(_registryHandler.GetDataToUninstallSection());
+            sb.Append("     ; Remove files and directory" + Environment.NewLine);
+            sb.Append("     Delete $INSTDIR\\*.*" + Environment.NewLine);
             sb.Append("     RMDir \"$INSTDIR\"" + Environment.NewLine);
             sb.Append("SectionEnd" + Environment.NewLine + Environment.NewLine);
 
