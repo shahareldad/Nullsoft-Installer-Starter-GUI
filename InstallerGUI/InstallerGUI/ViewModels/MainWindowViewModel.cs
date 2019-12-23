@@ -61,9 +61,10 @@ namespace InstallerGUI.ViewModels
 
                 var lineLength = nsiContent[index].Length;
                 nsiContent[index] = nsiContent[index].Remove(lineLength - 1);
-                nsiContent[index] = string.Join("", nsiContent[index], nsiContent[index + 1]);
+                nsiContent[index] = string.Join("", nsiContent[index], nsiContent[index + 1]).Replace("  ", " ");
 
                 nsiContent.RemoveAt(index + 1);
+                length--;
             }
             LoadFileLines = nsiContent;
             GeneralViewModel.Load(LoadFileLines);
