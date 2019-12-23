@@ -22,4 +22,13 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5313037F-8603-463A-82C5-95B71D3B30D3}
 	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfsapp:8080/tfs/ladpc
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = InstallerGUI\\InstallerGUI.csproj
+		SccProjectName1 = InstallerGUI
+		SccLocalPath1 = InstallerGUI
+	EndGlobalSection
 EndGlobal

@@ -37,9 +37,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ToolBar Background="LightGray">
-            <Button Command="{Binding CreateNsiFileCommand}" Style="{StaticResource ToolbarButtonStyle}">
+            <Button Command="{Binding CreateNsiFileCommand}" ToolTip="Create NSI File" Style="{StaticResource ToolbarButtonStyle}">
                 <Button.Content>
                     <Image Source="/InstallerGUI;component/Resources/start.png" />
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding LoadNsiFileCommand}" ToolTip="Load NSI File" Style="{StaticResource ToolbarButtonStyle}">
+                <Button.Content>
+                    <Image Source="/InstallerGUI;component/Resources/OpenFile.png" />
                 </Button.Content>
             </Button>
         </ToolBar>

@@ -1,10 +1,11 @@
 ﻿using InstallerGUI.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace InstallerGUI.ViewModels
 {
-    public class GeneralViewModel : BaseViewModel, IGetDataToNsi, IHoldGeneralInformation
+    public class GeneralViewModel : BaseViewModel, IGetDataToNsi, IHoldGeneralInformation, ILoadFileHandler
     {
         private string _applcationName;
         private string _outputFilename;
@@ -12,6 +13,9 @@ namespace InstallerGUI.ViewModels
         private string _companyName;
         private string _fileDescription;
         private string _legalCopyright;
+        private string _productVersion;
+        private string _fileVersion;
+        private string _destinationFolder;
 
         public string ApplcationName
         {
@@ -26,6 +30,7 @@ namespace InstallerGUI.ViewModels
                     _applcationName = value;
                     OnApplicationNameUpdated();
                 }
+                OnPropertyChanged(nameof(ApplcationName));
             }
         }
 
@@ -42,11 +47,35 @@ namespace InstallerGUI.ViewModels
             }
         }
 
-        public string DestinationFolder { get; set; }
+        public string DestinationFolder
+        {
+            get { return _destinationFolder; }
+            set
+            {
+                _destinationFolder = value;
+                OnPropertyChanged(nameof(DestinationFolder));
+            }
+        }
 
-        public string FileVersion { get; set; }
+        public string FileVersion
+        {
+            get { return _fileVersion; }
+            set
+            {
+                _fileVersion = value;
+                OnPropertyChanged(nameof(FileVersion));
+            }
+        }
 
-        public string ProductVersion { get; set; }
+        public string ProductVersion
+        {
+            get { return _productVersion; }
+            set
+            {
+                _productVersion = value;
+                OnPropertyChanged(nameof(ProductVersion));
+            }
+        }
 
         public string ProductName
         {
@@ -61,6 +90,7 @@ namespace InstallerGUI.ViewModels
                     _productName = value;
                     OnProductNameUpdated();
                 }
+                OnPropertyChanged(nameof(ProductName));
             }
         }
 
@@ -77,6 +107,7 @@ namespace InstallerGUI.ViewModels
                     _companyName = value;
                     OnCompanyNameUpdated();
                 }
+                OnPropertyChanged(nameof(CompanyName));
             }
         }
 
@@ -169,6 +200,62 @@ namespace InstallerGUI.ViewModels
             sb.Append("RequestExecutionLevel admin" + Environment.NewLine + Environment.NewLine);
 
             return sb.ToString();
+        }
+
+        public void Load(IEnumerable<string> lines)
+        {
+            foreach (var line in lines)
+            {
+                if (line.Contains("VIAddVersionKey "))
+                {
+                    var temp = line.Replace("VIAddVersionKey ", "");
+                    if (temp.Contains("ProductName"))
+                    {
+                        var temp2 = temp.Replace("\"ProductName\" \"", "").Replace("\"", "");
+                        ProductName = temp2;
+                    }
+                    if (temp.Contains("CompanyName"))
+                    {
+                        var temp2 = temp.Replace("\"CompanyName\" \"", "").Replace("\"", "");
+                        CompanyName = temp2;
+                    }
+                    if (temp.Contains("FileVersion"))
+                    {
+                        var temp2 = temp.Replace("\"FileVersion\" \"", "").Replace("\"", "");
+                        FileVersion = temp2;
+                    }
+                    if (temp.Contains("FileDescription"))
+                    {
+                        var temp2 = temp.Replace("\"FileDescription\" \"", "").Replace("\"", "");
+                        FileDescription = temp2;
+                    }
+                    if (temp.Contains("LegalCopyright"))
+                    {
+                        var temp2 = temp.Replace("\"LegalCopyright\" \"", "").Replace("\"", "");
+                        LegalCopyright = temp2;
+                    }
+                }
+                if (line.Contains("InstallDir "))
+                {
+                    var temp = line.Replace("InstallDir \"", "").Replace("\"", "");
+                    DestinationFolder = temp;
+                }
+                if (line.Contains("OutFile "))
+                {
+                    var temp = line.Replace("OutFile \"", "").Replace("\"", "");
+                    OutputFilename = temp;
+                }
+                if (line.Contains("Name "))
+                {
+                    var temp = line.Replace("Name \"", "").Replace("\"", "");
+                    ApplcationName = temp;
+                }
+                if (line.Contains("VIProductVersion "))
+                {
+                    var temp = line.Replace("VIProductVersion \"", "").Replace("\"", "");
+                    ProductVersion = temp;
+                }
+            }
         }
     }
 }

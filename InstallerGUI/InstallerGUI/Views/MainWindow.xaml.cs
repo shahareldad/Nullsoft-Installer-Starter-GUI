@@ -14,14 +14,32 @@ namespace InstallerGUI.Views
             InitializeComponent();
 
             (DataContext as IRequestOpenFileExplorer).GetFilenameToSaveEvent += MainWindow_GetFilenameToSaveEvent;
+            (DataContext as IRequestOpenFileExplorer).GetFilenameToLoadEvent += MainWindow_GetFilenameToLoadEvent;
+        }
+
+        private string MainWindow_GetFilenameToLoadEvent()
+        {
+            var dialog = new OpenFileDialog
+            {
+                CheckFileExists = true,
+                AddExtension = true,
+                DefaultExt = "nsi",
+                Filter = "NSIS files (*.nsi)|*.nsi"
+            };
+            var result = dialog.ShowDialog();
+            if (result.HasValue)
+                return dialog.FileName;
+            return string.Empty;
         }
 
         private string MainWindow_GetFilenameToSaveEvent()
         {
-            var dialog = new OpenFileDialog();
-            dialog.CheckFileExists = false;
-            dialog.AddExtension = true;
-            dialog.DefaultExt = "nsi";
+            var dialog = new SaveFileDialog
+            {
+                CheckFileExists = false,
+                AddExtension = true,
+                DefaultExt = "nsi"
+            };
             var result = dialog.ShowDialog();
             if (result.HasValue)
                 return dialog.FileName;

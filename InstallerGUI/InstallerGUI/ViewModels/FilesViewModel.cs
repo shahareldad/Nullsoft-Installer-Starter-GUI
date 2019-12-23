@@ -1,13 +1,15 @@
 ﻿using InstallerGUI.Contracts;
 using InstallerGUI.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
 namespace InstallerGUI.ViewModels
 {
-    public class FilesViewModel : BaseViewModel, IHandleFiles, IGetDataToNsi
+    public class FilesViewModel : BaseViewModel, IHandleFiles, IGetDataToNsi, ILoadFileHandler
     {
         private IHoldGeneralInformation _generalInformation;
 
@@ -40,7 +42,7 @@ namespace InstallerGUI.ViewModels
             var sb = new StringBuilder();
 
             sb.Append("; The stuff to install" + Environment.NewLine);
-            sb.Append("Section \"" + _generalInformation.ApplcationName + " (required)\"" + Environment.NewLine);
+            sb.Append("Section \"" + _generalInformation.ApplcationName + " files to be installed (required)\"" + Environment.NewLine);
             sb.Append("     SectionIn RO" + Environment.NewLine);
             sb.Append("     SetOutPath $INSTDIR" + Environment.NewLine);
 
@@ -53,6 +55,15 @@ namespace InstallerGUI.ViewModels
             sb.Append("SectionEnd" + Environment.NewLine + Environment.NewLine);
 
             return sb.ToString();
+        }
+
+        public void Load(IEnumerable<string> lines)
+        {
+            foreach (var line in lines.Where(x => x.Contains("File ") && !x.Contains("OutFile")))
+            {
+                var temp = line.Replace("File \"", "").Replace("\"", "");
+                SelectedFiles.Add(temp);
+            }
         }
     }
 }

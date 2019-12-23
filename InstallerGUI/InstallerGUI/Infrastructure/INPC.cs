@@ -8,7 +8,7 @@ namespace InstallerGUI.Infrastructure
 
         public void OnPropertyChanged(string propName)
         {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

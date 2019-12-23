@@ -14,6 +14,10 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -63,6 +67,7 @@
     <Compile Include="Contracts\IHandleRegistry.cs" />
     <Compile Include="Contracts\IHandleFiles.cs" />
     <Compile Include="Contracts\IHoldGeneralInformation.cs" />
+    <Compile Include="Contracts\ILoadFileHandler.cs" />
     <Compile Include="Contracts\IRequestOpenFileExplorer.cs" />
     <Compile Include="Infrastructure\CommandAction.cs" />
     <Compile Include="Models\RegistryModel.cs" />
@@ -144,6 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\start.png" />
+    <Resource Include="Resources\OpenFile.png" />
+    <Content Include="Resources\OpenFile.svg" />
     <Content Include="Resources\start.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
