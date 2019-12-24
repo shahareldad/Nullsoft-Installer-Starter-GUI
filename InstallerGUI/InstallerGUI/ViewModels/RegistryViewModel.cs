@@ -36,6 +36,8 @@ namespace InstallerGUI.ViewModels
 
         public string GetDataToNsi()
         {
+            if (!RegistryKeysToAdd.Any()) return string.Empty;
+
             var sb = new StringBuilder();
 
             sb.Append("; Registry section" + Environment.NewLine);

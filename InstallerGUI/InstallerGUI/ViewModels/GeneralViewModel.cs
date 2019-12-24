@@ -211,51 +211,47 @@ namespace InstallerGUI.ViewModels
                     var temp = line.Replace("VIAddVersionKey ", "");
                     if (temp.Contains("ProductName"))
                     {
-                        var temp2 = temp.Replace("\"ProductName\" \"", "").Replace("\"", "");
-                        ProductName = temp2;
+                        ProductName = ExtractValue(temp, "\"ProductName\"");
                     }
                     if (temp.Contains("CompanyName"))
                     {
-                        var temp2 = temp.Replace("\"CompanyName\" \"", "").Replace("\"", "");
-                        CompanyName = temp2;
+                        CompanyName = ExtractValue(temp, "\"CompanyName\"");
                     }
                     if (temp.Contains("FileVersion"))
                     {
-                        var temp2 = temp.Replace("\"FileVersion\" \"", "").Replace("\"", "");
-                        FileVersion = temp2;
+                        FileVersion = ExtractValue(temp, "\"FileVersion\"");
                     }
                     if (temp.Contains("FileDescription"))
                     {
-                        var temp2 = temp.Replace("\"FileDescription\" \"", "").Replace("\"", "");
-                        FileDescription = temp2;
+                        FileDescription = ExtractValue(temp, "\"FileDescription\"");
                     }
                     if (temp.Contains("LegalCopyright"))
                     {
-                        var temp2 = temp.Replace("\"LegalCopyright\" \"", "").Replace("\"", "");
-                        LegalCopyright = temp2;
+                        LegalCopyright = ExtractValue(temp, "\"LegalCopyright\"");
                     }
                 }
                 if (line.Contains("InstallDir "))
                 {
-                    var temp = line.Replace("InstallDir \"", "").Replace("\"", "");
-                    DestinationFolder = temp;
+                    DestinationFolder = ExtractValue(line, "InstallDir");
                 }
                 if (line.Contains("OutFile "))
                 {
-                    var temp = line.Replace("OutFile \"", "").Replace("\"", "");
-                    OutputFilename = temp;
+                    OutputFilename = ExtractValue(line, "OutFile");
                 }
                 if (line.Contains("Name "))
                 {
-                    var temp = line.Replace("Name \"", "").Replace("\"", "");
-                    ApplcationName = temp;
+                    ApplcationName = ExtractValue(line, "Name");
                 }
                 if (line.Contains("VIProductVersion "))
                 {
-                    var temp = line.Replace("VIProductVersion \"", "").Replace("\"", "");
-                    ProductVersion = temp;
+                    ProductVersion = ExtractValue(line, "VIProductVersion");
                 }
             }
+        }
+
+        private string ExtractValue(string temp, string key)
+        {
+            return temp.Replace(key + " \"", "").Replace("\"", "").Trim();
         }
     }
 }
