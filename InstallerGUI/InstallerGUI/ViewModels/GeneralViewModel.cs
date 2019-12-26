@@ -192,7 +192,7 @@ namespace InstallerGUI.ViewModels
             sb.Append("VIAddVersionKey \"FileVersion\" \"" + FileVersion + "\"" + Environment.NewLine);
             sb.Append("VIAddVersionKey \"FileDescription\" \"" + FileDescription + "\"" + Environment.NewLine);
             sb.Append("VIAddVersionKey \"LegalCopyright\" \"" + LegalCopyright + "\"" + Environment.NewLine + Environment.NewLine);
-            sb.Append("; The file to write" + Environment.NewLine);
+            sb.Append("; The setup file to create" + Environment.NewLine);
             sb.Append("OutFile \"" + OutputFilename + "\"" + Environment.NewLine + Environment.NewLine);
             sb.Append("; The default installation directory" + Environment.NewLine);
             sb.Append("InstallDir \"" + DestinationFolder + "\"" + Environment.NewLine + Environment.NewLine);
@@ -204,6 +204,8 @@ namespace InstallerGUI.ViewModels
 
         public void Load(IEnumerable<string> lines)
         {
+            ClearFields();
+
             foreach (var line in lines)
             {
                 if (line.Contains("VIAddVersionKey "))
@@ -247,6 +249,19 @@ namespace InstallerGUI.ViewModels
                     ProductVersion = ExtractValue(line, "VIProductVersion");
                 }
             }
+        }
+
+        private void ClearFields()
+        {
+            ApplcationName = string.Empty;
+            OutputFilename = string.Empty;
+            DestinationFolder = string.Empty;
+            FileVersion = string.Empty;
+            ProductVersion = string.Empty;
+            ProductName = string.Empty;
+            CompanyName = string.Empty;
+            FileDescription = string.Empty;
+            LegalCopyright = string.Empty;
         }
 
         private string ExtractValue(string temp, string key)

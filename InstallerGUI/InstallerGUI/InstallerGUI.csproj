@@ -70,6 +70,7 @@
     <Compile Include="Contracts\ILoadFileHandler.cs" />
     <Compile Include="Contracts\IRequestOpenFileExplorer.cs" />
     <Compile Include="Infrastructure\CommandAction.cs" />
+    <Compile Include="Models\InstallationFile.cs" />
     <Compile Include="Models\RegistryModel.cs" />
     <Compile Include="ViewModels\PagesViewModel.cs" />
     <Compile Include="ViewModels\SectionsViewModel.cs" />

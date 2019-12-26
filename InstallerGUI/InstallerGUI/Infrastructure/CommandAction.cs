@@ -59,7 +59,8 @@ namespace InstallerGUI.Infrastructure
 
         public void Execute(object parameter)
         {
-            _action((T)parameter);
+            if (parameter is T)
+                _action((T)parameter);
         }
     }
 }

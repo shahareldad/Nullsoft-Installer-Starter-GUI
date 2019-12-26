@@ -14,11 +14,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50px" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="20px" />
+            <RowDefinition Height="150px" />
         </Grid.RowDefinitions>
         <Button Content="Select Files" Click="OpenFileSelection_Clicked" Height="26px" />
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding SelectedFiles}" Grid.Row="1">
+        <DataGrid x:Name="DataGridSelectedFiles" AutoGenerateColumns="False" ItemsSource="{Binding SelectedFiles}" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Filename" Binding="{Binding}" Width="8*" />
+                <DataGridTextColumn Header="Filename" Binding="{Binding SourceFullPath}" Width="3*" />
+                <DataGridTextColumn Header="Destination Folder" Binding="{Binding DestinationFolder}" Width="2*" />
                 <DataGridTemplateColumn Header="Actions" Width="1*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -30,5 +33,19 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <TextBlock Margin="10px,0" Grid.Row="2" Text="* Click a destination folder textbox and select either button from below for a shortcut."/>
+        <UniformGrid Grid.Row="3">
+            <UniformGrid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="10px"/>
+                </Style>
+            </UniformGrid.Resources>
+            <Button Content="Destination Folder" Click="Button_Click"/>
+            <Button Content="Temporary" Click="Button_Click"/>
+            <Button Content="Desktop" Click="Button_Click"/>
+            <Button Content="Program Files" Click="Button_Click"/>
+            <Button Content="Windows" Click="Button_Click"/>
+            <Button Content="System32" Click="Button_Click"/>
+        </UniformGrid>
     </Grid>
 </UserControl>
