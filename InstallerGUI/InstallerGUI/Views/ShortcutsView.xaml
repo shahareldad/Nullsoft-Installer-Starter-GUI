@@ -1,37 +1,40 @@
-﻿<UserControl x:Class="InstallerGUI.Views.FilesView"
+﻿<UserControl x:Class="InstallerGUI.Views.ShortcutsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InstallerGUI.Views"
-             mc:Ignorable="d"
-             x:Name="FileViewUserControl"
+             mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid Margin="10px">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50px" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20px" />
             <RowDefinition Height="150px" />
         </Grid.RowDefinitions>
-        <Button Content="Select Files" Click="OpenFileSelection_Clicked" Height="26px" />
-        <DataGrid x:Name="DataGridSelectedFiles" AutoGenerateColumns="False" ItemsSource="{Binding SelectedFiles}" Grid.Row="1">
+        <DataGrid x:Name="DataGridShortcuts" AutoGenerateColumns="False" ItemsSource="{Binding Shortcuts}" SelectionUnit="Cell">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Filename" Binding="{Binding SourceFullPath}" Width="3*" />
-                <DataGridTextColumn Header="Destination Folder" Binding="{Binding DestinationFolder}" Width="2*" />
-                <DataGridTemplateColumn Header="Actions" Width="1*">
+                <DataGridTextColumn Header="Link" Binding="{Binding LinkValue}" Width="8*"/>
+                <DataGridTextColumn Header="Target" Binding="{Binding TargetValue}" Width="8*"/>
+                <DataGridTemplateColumn Header="Add row" Width="1*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Remove"
-                                    Command="{Binding ElementName=FileViewUserControl, Path=DataContext.RemoveFileCommand}"
-                                    CommandParameter="{Binding}" />
+                            <Button Content="+" Click="AddNewRowButtonClick"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Add row" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="-" Click="RemoveRowButtonClick"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Margin="10px,0" Grid.Row="2" Text="* Click a destination folder textbox and select either button from below for a shortcut."/>
-        <UniformGrid Grid.Row="3">
+        <TextBlock Margin="10px,0" Grid.Row="1" Text="* Click a shortcut textbox and select either button from below for a folder shortcut."/>
+        <UniformGrid Grid.Row="2">
             <UniformGrid.Resources>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Margin" Value="10px"/>

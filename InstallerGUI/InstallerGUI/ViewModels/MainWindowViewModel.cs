@@ -29,6 +29,8 @@ namespace InstallerGUI.ViewModels
 
         public SectionsViewModel SectionsViewModel { get; set; }
 
+        public ShortcutsViewModel ShortcutsViewModel { get; set; }
+
         public ICommand LoadNsiFileCommand { get; set; }
 
         public ICommand CreateNsiFileCommand { get; set; }
@@ -36,13 +38,13 @@ namespace InstallerGUI.ViewModels
         public MainWindowViewModel()
         {
             GeneralViewModel = new GeneralViewModel();
-            FilesViewModel = new FilesViewModel(GeneralViewModel);
+            ShortcutsViewModel = new ShortcutsViewModel();
+            FilesViewModel = new FilesViewModel(GeneralViewModel, ShortcutsViewModel);
             RegistryViewModel = new RegistryViewModel();
             PagesViewModel = new PagesViewModel();
             SectionsViewModel = new SectionsViewModel(FilesViewModel, RegistryViewModel);
 
             CreateNsiFileCommand = new CommandAction(CreateNsiFileCommandAction);
-
             LoadNsiFileCommand = new CommandAction(LoadNsiFileCommandAction);
         }
 
@@ -70,6 +72,7 @@ namespace InstallerGUI.ViewModels
             GeneralViewModel.Load(LoadFileLines);
             FilesViewModel.Load(LoadFileLines);
             RegistryViewModel.Load(LoadFileLines);
+            ShortcutsViewModel.Load(LoadFileLines);
         }
 
         private void CreateNsiFileCommandAction()

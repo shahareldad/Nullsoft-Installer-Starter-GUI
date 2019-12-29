@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Contracts\IAddItemToCollection.cs" />
     <Compile Include="Contracts\IGetDataToNsi.cs" />
     <Compile Include="Contracts\IHandleRegistry.cs" />
     <Compile Include="Contracts\IHandleFiles.cs" />
@@ -72,8 +73,10 @@
     <Compile Include="Infrastructure\CommandAction.cs" />
     <Compile Include="Models\InstallationFile.cs" />
     <Compile Include="Models\RegistryModel.cs" />
+    <Compile Include="Models\ShortcutModel.cs" />
     <Compile Include="ViewModels\PagesViewModel.cs" />
     <Compile Include="ViewModels\SectionsViewModel.cs" />
+    <Compile Include="ViewModels\ShortcutsViewModel.cs" />
     <Compile Include="Views\FilesView.xaml.cs">
       <DependentUpon>FilesView.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,9 @@
     </Compile>
     <Compile Include="Views\RegistryView.xaml.cs">
       <DependentUpon>RegistryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShortcutsView.xaml.cs">
+      <DependentUpon>ShortcutsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\FilesView.xaml">
       <SubType>Designer</SubType>
@@ -117,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegistryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShortcutsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

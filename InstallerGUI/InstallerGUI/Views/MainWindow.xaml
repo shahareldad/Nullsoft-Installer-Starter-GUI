@@ -25,6 +25,9 @@
         <DataTemplate DataType="{x:Type viewmodels:PagesViewModel}">
             <views:PagesView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ShortcutsViewModel}">
+            <views:ShortcutsView />
+        </DataTemplate>
         <Style TargetType="{x:Type Button}" x:Key="ToolbarButtonStyle">
             <Setter Property="Margin" Value="5px,0" />
             <Setter Property="BorderBrush" Value="DarkGray" />
@@ -54,7 +57,7 @@
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" MinWidth="100px" />
+                                <TextBlock Text="{Binding}" MinWidth="80px" />
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -68,6 +71,9 @@
             </TabItem>
             <TabItem Header="Registry">
                 <ContentControl Content="{Binding RegistryViewModel}" />
+            </TabItem>
+            <TabItem Header="Shortcuts">
+                <ContentControl Content="{Binding ShortcutsViewModel}" />
             </TabItem>
             <!--<TabItem Header="Pages">
                 <ContentControl Content="{Binding PagesViewModel}" />

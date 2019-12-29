@@ -12,17 +12,20 @@ namespace InstallerGUI.ViewModels
 {
     public class FilesViewModel : BaseViewModel, IHandleFiles, IGetDataToNsi, ILoadFileHandler
     {
+        private ShortcutsViewModel _shortcutsViewModel;
+
         private IHoldGeneralInformation _generalInformation;
 
         public ObservableCollection<InstallationFile> SelectedFiles { get; set; }
 
         public ICommand RemoveFileCommand { get; set; }
 
-        public FilesViewModel(IHoldGeneralInformation generalInformation)
+        public FilesViewModel(IHoldGeneralInformation generalInformation, ShortcutsViewModel shortcutsViewModel)
         {
             _generalInformation = generalInformation;
             SelectedFiles = new ObservableCollection<InstallationFile>();
             RemoveFileCommand = new CommandAction<InstallationFile>(RemoveFileCommandAction);
+            _shortcutsViewModel = shortcutsViewModel;
         }
 
         public void RemoveFileCommandAction(InstallationFile parameter)
@@ -48,19 +51,21 @@ namespace InstallerGUI.ViewModels
 
             sb.Append("; The stuff to install" + Environment.NewLine);
             sb.Append("Section \"" + _generalInformation.ApplcationName + " files to be installed (required)\"" + Environment.NewLine);
-            sb.Append("     SectionIn RO" + Environment.NewLine);
+            sb.Append(" SectionIn RO" + Environment.NewLine);
 
             var groupBy = SelectedFiles.GroupBy(x => x.DestinationFolder);
             foreach (var item in groupBy)
             {
-                sb.Append("     SetOutPath \"" + item.Key + "\"" + Environment.NewLine);
+                sb.Append(" SetOutPath \"" + item.Key + "\"" + Environment.NewLine);
                 foreach (var file in item)
                 {
                     sb.Append("     File \"" + file.SourceFullPath + "\"" + Environment.NewLine);
                 }
             }
 
-            sb.Append("     WriteUninstaller \"uninstall.exe\"" + Environment.NewLine);
+            sb.Append(_shortcutsViewModel.GetDataToNsi() + Environment.NewLine);
+
+            sb.Append(" WriteUninstaller \"uninstall.exe\"" + Environment.NewLine);
             sb.Append("SectionEnd" + Environment.NewLine + Environment.NewLine);
 
             return sb.ToString();
