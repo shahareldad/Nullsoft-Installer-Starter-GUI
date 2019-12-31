@@ -28,6 +28,9 @@
         <DataTemplate DataType="{x:Type viewmodels:ShortcutsViewModel}">
             <views:ShortcutsView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:UserVariablesViewModel}">
+            <views:UserVariablesView />
+        </DataTemplate>
         <Style TargetType="{x:Type Button}" x:Key="ToolbarButtonStyle">
             <Setter Property="Margin" Value="5px,0" />
             <Setter Property="BorderBrush" Value="DarkGray" />
@@ -74,6 +77,9 @@
             </TabItem>
             <TabItem Header="Shortcuts">
                 <ContentControl Content="{Binding ShortcutsViewModel}" />
+            </TabItem>
+            <TabItem Header="User defined variables">
+                <ContentControl Content="{Binding UserVariablesViewModel}" />
             </TabItem>
             <!--<TabItem Header="Pages">
                 <ContentControl Content="{Binding PagesViewModel}" />

@@ -1,9 +1,6 @@
 ﻿namespace InstallerGUI.Contracts
 {
-    public interface IHandleRegistry : IGetDataToNsi
+    public interface IHandleRegistry : IHandleNsiData
     {
-        bool RegistrySectionNeeded { get; }
-
-        string GetDataToUninstallSection();
     }
 }

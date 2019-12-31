@@ -31,6 +31,8 @@ namespace InstallerGUI.ViewModels
 
         public ShortcutsViewModel ShortcutsViewModel { get; set; }
 
+        public UserVariablesViewModel UserVariablesViewModel { get; set; }
+
         public ICommand LoadNsiFileCommand { get; set; }
 
         public ICommand CreateNsiFileCommand { get; set; }
@@ -38,6 +40,7 @@ namespace InstallerGUI.ViewModels
         public MainWindowViewModel()
         {
             GeneralViewModel = new GeneralViewModel();
+            UserVariablesViewModel = new UserVariablesViewModel();
             ShortcutsViewModel = new ShortcutsViewModel();
             FilesViewModel = new FilesViewModel(GeneralViewModel, ShortcutsViewModel);
             RegistryViewModel = new RegistryViewModel();
@@ -69,24 +72,32 @@ namespace InstallerGUI.ViewModels
                 length--;
             }
             LoadFileLines = nsiContent;
-            GeneralViewModel.Load(LoadFileLines);
-            FilesViewModel.Load(LoadFileLines);
-            RegistryViewModel.Load(LoadFileLines);
-            ShortcutsViewModel.Load(LoadFileLines);
+            GeneralViewModel.LoadDataFromNsi(LoadFileLines);
+            FilesViewModel.LoadDataFromNsi(LoadFileLines);
+            RegistryViewModel.LoadDataFromNsi(LoadFileLines);
+            ShortcutsViewModel.LoadDataFromNsi(LoadFileLines);
+            UserVariablesViewModel.LoadDataFromNsi(LoadFileLines);
         }
 
         private void CreateNsiFileCommandAction()
         {
             var sb = new StringBuilder();
 
-            if (RegistryViewModel.RegistrySectionNeeded)
+            if (UserVariablesViewModel.HasMUI)
             {
-                sb.Append("!include Registry.nsh" + Environment.NewLine + Environment.NewLine);
+                sb.Append("!include \"${NSISDIR}\\Contrib\\Modern UI\\System.nsh\"" + Environment.NewLine);
             }
 
-            sb.Append(GeneralViewModel.GetDataToNsi());
-            sb.Append(PagesViewModel.GetDataToNsi());
-            sb.Append(SectionsViewModel.GetDataToNsi());
+            if (RegistryViewModel.RegistrySectionNeeded)
+            {
+                sb.Append("!include Registry.nsh" + Environment.NewLine);
+            }
+            sb.Append(Environment.NewLine);
+
+            sb.Append(UserVariablesViewModel.GetInstallDataToNsi());
+            sb.Append(GeneralViewModel.GetInstallDataToNsi());
+            sb.Append(PagesViewModel.GetInstallDataToNsi());
+            sb.Append(SectionsViewModel.GetInstallDataToNsi());
 
             var filename = GetFilenameToSaveEvent?.Invoke();
 

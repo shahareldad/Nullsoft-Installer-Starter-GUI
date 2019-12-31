@@ -1,10 +1,11 @@
 ﻿using InstallerGUI.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace InstallerGUI.ViewModels
 {
-    public class SectionsViewModel : BaseViewModel, IGetDataToNsi
+    public class SectionsViewModel : BaseViewModel, IHandleNsiData
     {
         private IHandleFiles _fileHandler;
         private IHandleRegistry _registryHandler;
@@ -15,22 +16,29 @@ namespace InstallerGUI.ViewModels
             _registryHandler = registryHandler;
         }
 
-        public string GetDataToNsi()
+        public string GetInstallDataToNsi()
         {
             var sb = new StringBuilder();
 
-            sb.Append(_fileHandler.GetDataToNsi());
-            sb.Append(_registryHandler.GetDataToNsi());
+            sb.Append(_fileHandler.GetInstallDataToNsi());
+            sb.Append(_registryHandler.GetInstallDataToNsi());
 
             sb.Append("; Uninstaller" + Environment.NewLine);
             sb.Append("Section \"Uninstall\"" + Environment.NewLine);
-            sb.Append(_registryHandler.GetDataToUninstallSection());
-            sb.Append("     ; Remove files and directory" + Environment.NewLine);
-            sb.Append("     Delete $INSTDIR\\*.*" + Environment.NewLine);
-            sb.Append("     RMDir \"$INSTDIR\"" + Environment.NewLine);
+            sb.Append(_registryHandler.GetUninstallDataToNsi());
+            sb.Append(_fileHandler.GetUninstallDataToNsi());
             sb.Append("SectionEnd" + Environment.NewLine + Environment.NewLine);
 
             return sb.ToString();
+        }
+
+        public string GetUninstallDataToNsi()
+        {
+            return string.Empty;
+        }
+
+        public void LoadDataFromNsi(IEnumerable<string> lines)
+        {
         }
     }
 }

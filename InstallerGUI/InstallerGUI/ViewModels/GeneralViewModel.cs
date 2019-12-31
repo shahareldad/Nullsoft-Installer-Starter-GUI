@@ -5,7 +5,7 @@ using System.Text;
 
 namespace InstallerGUI.ViewModels
 {
-    public class GeneralViewModel : BaseViewModel, IGetDataToNsi, IHoldGeneralInformation, ILoadFileHandler
+    public class GeneralViewModel : BaseViewModel, IHandleNsiData, IHoldGeneralInformation
     {
         private string _applcationName;
         private string _outputFilename;
@@ -144,54 +144,21 @@ namespace InstallerGUI.ViewModels
             ProductVersion = "1.0.0.0";
         }
 
-        private void OnApplicationNameUpdated()
-        {
-            if (string.IsNullOrWhiteSpace(_applcationName))
-                return;
-
-            if (string.IsNullOrWhiteSpace(OutputFilename))
-            {
-                var temp = string.Empty;
-                foreach (var word in _applcationName.Split(' '))
-                {
-                    temp += char.ToUpperInvariant(word[0]) + word.Substring(1);
-                }
-                OutputFilename = string.Concat(temp, "Setup.exe");
-            }
-        }
-
-        private void OnProductNameUpdated()
-        {
-            if (string.IsNullOrWhiteSpace(_productName))
-                return;
-
-            var temp = string.Empty;
-            foreach (var word in _productName.Split(' '))
-            {
-                temp += char.ToUpperInvariant(word[0]) + word.Substring(1);
-            }
-            _productName = temp;
-            OnPropertyChanged(nameof(ProductName));
-            FileDescription = _productName + " installation file";
-        }
-
-        private void OnCompanyNameUpdated()
-        {
-            LegalCopyright = "Copyright " + _companyName;
-        }
-
-        public string GetDataToNsi()
+        public string GetInstallDataToNsi()
         {
             var sb = new StringBuilder();
             sb.Append("; The name of the installer" + Environment.NewLine);
             sb.Append("Name \"" + ApplcationName + "\"" + Environment.NewLine + Environment.NewLine);
             sb.Append(";Version Information" + Environment.NewLine);
-            sb.Append("VIProductVersion \"" + ProductVersion + "\"" + Environment.NewLine);
-            sb.Append("VIAddVersionKey \"ProductName\" \"" + ProductName + "\"" + Environment.NewLine);
-            sb.Append("VIAddVersionKey \"CompanyName\" \"" + CompanyName + "\"" + Environment.NewLine);
-            sb.Append("VIAddVersionKey \"FileVersion\" \"" + FileVersion + "\"" + Environment.NewLine);
-            sb.Append("VIAddVersionKey \"FileDescription\" \"" + FileDescription + "\"" + Environment.NewLine);
-            sb.Append("VIAddVersionKey \"LegalCopyright\" \"" + LegalCopyright + "\"" + Environment.NewLine + Environment.NewLine);
+            if (!string.IsNullOrWhiteSpace(ProductVersion))
+            {
+                sb.Append("VIProductVersion \"" + ProductVersion + "\"" + Environment.NewLine);
+                sb.Append("VIAddVersionKey \"ProductName\" \"" + ProductName + "\"" + Environment.NewLine);
+                sb.Append("VIAddVersionKey \"CompanyName\" \"" + CompanyName + "\"" + Environment.NewLine);
+                sb.Append("VIAddVersionKey \"FileVersion\" \"" + FileVersion + "\"" + Environment.NewLine);
+                sb.Append("VIAddVersionKey \"FileDescription\" \"" + FileDescription + "\"" + Environment.NewLine);
+                sb.Append("VIAddVersionKey \"LegalCopyright\" \"" + LegalCopyright + "\"" + Environment.NewLine + Environment.NewLine);
+            }
             sb.Append("; The setup file to create" + Environment.NewLine);
             sb.Append("OutFile \"" + OutputFilename + "\"" + Environment.NewLine + Environment.NewLine);
             sb.Append("; The default installation directory" + Environment.NewLine);
@@ -202,7 +169,12 @@ namespace InstallerGUI.ViewModels
             return sb.ToString();
         }
 
-        public void Load(IEnumerable<string> lines)
+        public string GetUninstallDataToNsi()
+        {
+            return string.Empty;
+        }
+
+        public void LoadDataFromNsi(IEnumerable<string> lines)
         {
             ClearFields();
 
@@ -249,6 +221,42 @@ namespace InstallerGUI.ViewModels
                     ProductVersion = ExtractValue(line, "VIProductVersion");
                 }
             }
+        }
+
+        private void OnApplicationNameUpdated()
+        {
+            if (string.IsNullOrWhiteSpace(_applcationName))
+                return;
+
+            if (string.IsNullOrWhiteSpace(OutputFilename))
+            {
+                var temp = string.Empty;
+                foreach (var word in _applcationName.Split(' '))
+                {
+                    temp += char.ToUpperInvariant(word[0]) + word.Substring(1);
+                }
+                OutputFilename = string.Concat(temp, "Setup.exe");
+            }
+        }
+
+        private void OnProductNameUpdated()
+        {
+            if (string.IsNullOrWhiteSpace(_productName))
+                return;
+
+            var temp = string.Empty;
+            foreach (var word in _productName.Split(' '))
+            {
+                temp += char.ToUpperInvariant(word[0]) + word.Substring(1);
+            }
+            _productName = temp;
+            OnPropertyChanged(nameof(ProductName));
+            FileDescription = _productName + " installation file";
+        }
+
+        private void OnCompanyNameUpdated()
+        {
+            LegalCopyright = "Copyright " + _companyName;
         }
 
         private void ClearFields()

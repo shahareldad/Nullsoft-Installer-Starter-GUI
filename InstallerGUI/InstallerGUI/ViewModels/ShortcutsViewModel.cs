@@ -8,7 +8,7 @@ using System.Text;
 
 namespace InstallerGUI.ViewModels
 {
-    public class ShortcutsViewModel : BaseViewModel, IGetDataToNsi, IHandleCollectionItems, ILoadFileHandler
+    public class ShortcutsViewModel : BaseViewModel, IHandleNsiData, IHandleCollectionItems
     {
         public ObservableCollection<ShortcutModel> Shortcuts { get; set; }
 
@@ -17,8 +17,10 @@ namespace InstallerGUI.ViewModels
             Shortcuts = new ObservableCollection<ShortcutModel>();
         }
 
-        public string GetDataToNsi()
+        public string GetInstallDataToNsi()
         {
+            if (!Shortcuts.Any()) return string.Empty;
+
             var sb = new StringBuilder();
 
             sb.Append(";create shortcuts" + Environment.NewLine);
@@ -31,9 +33,11 @@ namespace InstallerGUI.ViewModels
                 sb.Append(item.TargetValue);
                 sb.Append("\" \"");
                 sb.Append(item.Parameters);
-                sb.Append("\" \"");
+                sb.Append("\"");
+                //sb.Append("\" \"");
                 if (!string.IsNullOrWhiteSpace(item.IconFile))
                 {
+                    sb.Append(" \"");
                     sb.Append(item.IconFile);
                     sb.Append("\" ");
                     if (!string.IsNullOrWhiteSpace(item.IconIndexNumber))
@@ -63,7 +67,7 @@ namespace InstallerGUI.ViewModels
             return sb.ToString();
         }
 
-        public void Load(IEnumerable<string> lines)
+        public void LoadDataFromNsi(IEnumerable<string> lines)
         {
             Shortcuts.Clear();
 
@@ -111,6 +115,25 @@ namespace InstallerGUI.ViewModels
         public void RemoveItem(object model)
         {
             Shortcuts.Remove(model as ShortcutModel);
+        }
+
+        public string GetUninstallDataToNsi()
+        {
+            if (!Shortcuts.Any()) return string.Empty;
+
+            var sb = new StringBuilder();
+
+            sb.Append(" ;Delete shortcuts" + Environment.NewLine);
+
+            foreach (var item in Shortcuts)
+            {
+                sb.Append(" Delete  \"");
+                sb.Append(item.LinkValue);
+                sb.Append("\"");
+                sb.Append(Environment.NewLine);
+            }
+
+            return sb.ToString();
         }
     }
 }

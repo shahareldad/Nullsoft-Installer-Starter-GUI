@@ -63,20 +63,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Contracts\IAddItemToCollection.cs" />
-    <Compile Include="Contracts\IGetDataToNsi.cs" />
-    <Compile Include="Contracts\IHandleRegistry.cs" />
+    <Compile Include="Contracts\IHandleCollectionItems.cs" />
+    <Compile Include="Contracts\IHandleNsiData.cs" />
     <Compile Include="Contracts\IHandleFiles.cs" />
+    <Compile Include="Contracts\IHandleRegistry.cs" />
     <Compile Include="Contracts\IHoldGeneralInformation.cs" />
-    <Compile Include="Contracts\ILoadFileHandler.cs" />
     <Compile Include="Contracts\IRequestOpenFileExplorer.cs" />
     <Compile Include="Infrastructure\CommandAction.cs" />
     <Compile Include="Models\InstallationFile.cs" />
     <Compile Include="Models\RegistryModel.cs" />
     <Compile Include="Models\ShortcutModel.cs" />
+    <Compile Include="Models\VariableModel.cs" />
     <Compile Include="ViewModels\PagesViewModel.cs" />
     <Compile Include="ViewModels\SectionsViewModel.cs" />
     <Compile Include="ViewModels\ShortcutsViewModel.cs" />
+    <Compile Include="ViewModels\UserVariablesViewModel.cs" />
     <Compile Include="Views\FilesView.xaml.cs">
       <DependentUpon>FilesView.xaml</DependentUpon>
     </Compile>
@@ -88,6 +89,9 @@
     </Compile>
     <Compile Include="Views\ShortcutsView.xaml.cs">
       <DependentUpon>ShortcutsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserVariablesView.xaml.cs">
+      <DependentUpon>UserVariablesView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\FilesView.xaml">
       <SubType>Designer</SubType>
@@ -127,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShortcutsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserVariablesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

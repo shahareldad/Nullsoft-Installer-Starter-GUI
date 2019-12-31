@@ -30,19 +30,19 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Margin="10px,0" Grid.Row="2" Text="* Click a destination folder textbox and select either button from below for a shortcut."/>
+        <TextBlock Margin="10px,0" Grid.Row="2" Text="* Click a destination folder textbox and select either button from below for a shortcut." />
         <UniformGrid Grid.Row="3">
             <UniformGrid.Resources>
                 <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="10px"/>
+                    <Setter Property="Margin" Value="10px" />
                 </Style>
             </UniformGrid.Resources>
-            <Button Content="Destination Folder" Click="Button_Click"/>
-            <Button Content="Temporary" Click="Button_Click"/>
-            <Button Content="Desktop" Click="Button_Click"/>
-            <Button Content="Program Files" Click="Button_Click"/>
-            <Button Content="Windows" Click="Button_Click"/>
-            <Button Content="System32" Click="Button_Click"/>
+            <Button Content="Destination Folder" Click="Button_Click" />
+            <Button Content="Temporary" Click="Button_Click" />
+            <Button Content="Desktop" Click="Button_Click" />
+            <Button Content="Program Files" Click="Button_Click" />
+            <Button Content="Windows" Click="Button_Click" />
+            <Button Content="System32" Click="Button_Click" />
         </UniformGrid>
     </Grid>
 </UserControl>

@@ -44,21 +44,27 @@ namespace InstallerGUI.Views
                 case "Program Files":
                     SetValue(item, columnMemberPath, "$PROGRAMFILES\\");
                     break;
+
                 case "Windows":
                     SetValue(item, columnMemberPath, "$WINDIR\\");
                     break;
+
                 case "System32":
                     SetValue(item, columnMemberPath, "$SYSDIR\\");
                     break;
+
                 case "Temporary":
                     SetValue(item, columnMemberPath, "$TEMP\\");
                     break;
+
                 case "Desktop":
                     SetValue(item, columnMemberPath, "$DESKTOP\\");
                     break;
+
                 case "Destination Folder":
                     SetValue(item, columnMemberPath, "$INSTDIR\\");
                     break;
+
                 default:
                     SetValue(item, columnMemberPath, "$INSTDIR\\");
                     break;

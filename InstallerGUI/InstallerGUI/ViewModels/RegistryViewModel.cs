@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace InstallerGUI.ViewModels
 {
-    public class RegistryViewModel : BaseViewModel, IHandleRegistry, IGetDataToNsi, ILoadFileHandler
+    public class RegistryViewModel : BaseViewModel, IHandleRegistry
     {
         public ICommand AddNewRegistryKeyCommand { get; set; }
 
@@ -34,7 +34,7 @@ namespace InstallerGUI.ViewModels
             RegistryKeysToAdd = new ObservableCollection<RegistryModel>();
         }
 
-        public string GetDataToNsi()
+        public string GetInstallDataToNsi()
         {
             if (!RegistryKeysToAdd.Any()) return string.Empty;
 
@@ -46,7 +46,7 @@ namespace InstallerGUI.ViewModels
 
             foreach (var key in RegistryKeysToAdd)
             {
-                sb.Append("     ${registry::CreateKey} \"" + key.RegistrySectionLong + "\\" + key.RegistryPathToKey + "\"" + Environment.NewLine);
+                sb.Append("     ${registry::CreateKey} \"" + key.RegistrySectionLong + "\\" + key.RegistryPathToKey + "\" $R0" + Environment.NewLine);
                 sb.Append("     ${registry::Write} \"" + key.RegistrySectionLong + "\\" + key.RegistryPathToKey + "\" \"" + key.RegistryKeyName + "\" \"" + key.RegistryKeyValue + "\" \"" + key.RegistryKeyType + "\" $R0" + Environment.NewLine);
             }
 
@@ -144,7 +144,7 @@ namespace InstallerGUI.ViewModels
             }
         }
 
-        public string GetDataToUninstallSection()
+        public string GetUninstallDataToNsi()
         {
             var sb = new StringBuilder();
 
@@ -158,7 +158,7 @@ namespace InstallerGUI.ViewModels
             return sb.ToString();
         }
 
-        public void Load(IEnumerable<string> lines)
+        public void LoadDataFromNsi(IEnumerable<string> lines)
         {
             RegistryKeysToAdd.Clear();
 

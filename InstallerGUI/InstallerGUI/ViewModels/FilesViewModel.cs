@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace InstallerGUI.ViewModels
 {
-    public class FilesViewModel : BaseViewModel, IHandleFiles, IGetDataToNsi, ILoadFileHandler
+    public class FilesViewModel : BaseViewModel, IHandleFiles
     {
         private ShortcutsViewModel _shortcutsViewModel;
 
@@ -45,7 +45,7 @@ namespace InstallerGUI.ViewModels
             }
         }
 
-        public string GetDataToNsi()
+        public string GetInstallDataToNsi()
         {
             var sb = new StringBuilder();
 
@@ -63,7 +63,7 @@ namespace InstallerGUI.ViewModels
                 }
             }
 
-            sb.Append(_shortcutsViewModel.GetDataToNsi() + Environment.NewLine);
+            sb.Append(_shortcutsViewModel.GetInstallDataToNsi() + Environment.NewLine);
 
             sb.Append(" WriteUninstaller \"uninstall.exe\"" + Environment.NewLine);
             sb.Append("SectionEnd" + Environment.NewLine + Environment.NewLine);
@@ -71,7 +71,7 @@ namespace InstallerGUI.ViewModels
             return sb.ToString();
         }
 
-        public void Load(IEnumerable<string> lines)
+        public void LoadDataFromNsi(IEnumerable<string> lines)
         {
             SelectedFiles.Clear();
 
@@ -96,6 +96,18 @@ namespace InstallerGUI.ViewModels
                     });
                 }
             }
+        }
+
+        public string GetUninstallDataToNsi()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(_shortcutsViewModel.GetUninstallDataToNsi());
+            sb.Append(" ; Remove files and directory" + Environment.NewLine);
+            sb.Append(" Delete $INSTDIR\\*.*" + Environment.NewLine);
+            sb.Append(" RMDir \"$INSTDIR\"" + Environment.NewLine);
+
+            return sb.ToString();
         }
     }
 }

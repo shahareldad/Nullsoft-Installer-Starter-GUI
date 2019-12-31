@@ -1,6 +1,6 @@
 ﻿namespace InstallerGUI.Contracts
 {
-    public interface IHandleFiles : IGetDataToNsi
+    public interface IHandleFiles : IHandleNsiData
     {
         void HandleFiles(string[] safeFileNames);
     }

@@ -41,21 +41,27 @@ namespace InstallerGUI.Views
                 case "Program Files":
                     item.DestinationFolder = "$PROGRAMFILES\\";
                     break;
+
                 case "Windows":
                     item.DestinationFolder = "$WINDIR\\";
                     break;
+
                 case "System32":
                     item.DestinationFolder = "$SYSDIR\\";
                     break;
+
                 case "Temporary":
                     item.DestinationFolder = "$TEMP\\";
                     break;
+
                 case "Desktop":
                     item.DestinationFolder = "$DESKTOP\\";
                     break;
+
                 case "Destination Folder":
                     item.DestinationFolder = "$INSTDIR\\";
                     break;
+
                 default:
                     item.DestinationFolder = "$INSTDIR\\";
                     break;
