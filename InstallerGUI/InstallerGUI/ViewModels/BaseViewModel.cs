@@ -4,5 +4,6 @@ namespace InstallerGUI.ViewModels
 {
     public class BaseViewModel : INPC
     {
+		
     }
 }
