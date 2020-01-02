@@ -10,8 +10,26 @@ using InstallerGUI.Models;
 
 namespace InstallerGUI.ViewModels
 {
-    public class UserVariablesViewModel : BaseViewModel, IHandleNsiData, IHandleCollectionItems
+    public class UserVariablesViewModel : BaseViewModel, IHandleNsiData, IHandleCollectionItems, IHoldVariables
     {
+        private IEnumerable<VariableModel> _defaultShortcuts = new List<VariableModel>
+        {
+            new VariableModel { VariableValue = "Destination_Folder", VariableName = "INSTDIR", UserDefined = false },
+            new VariableModel { VariableValue = "Temporary", VariableName = "TEMP", UserDefined = false },
+            new VariableModel { VariableValue = "Desktop", VariableName = "DESKTOP", UserDefined = false },
+            new VariableModel { VariableValue = "Program Files", VariableName = "PROGRAMFILES", UserDefined = false },
+            new VariableModel { VariableValue = "Windows", VariableName = "WINDIR", UserDefined = false },
+            new VariableModel { VariableValue = "System32", VariableName = "SYSDIR", UserDefined = false }
+        };
+
+        public IEnumerable<VariableModel> AllVariables
+        {
+            get
+            {
+                return Enumerable.Concat(_defaultShortcuts, Variables);
+            }
+        }
+
         public ObservableCollection<VariableModel> Variables { get; set; }
 
         public ICommand AddNewVariableCommand { get; set; }
@@ -39,7 +57,8 @@ namespace InstallerGUI.ViewModels
             var model = new VariableModel
             {
                 VariableName = VariableName.Replace(" ", "_"),
-                VariableValue = VariableValue
+                VariableValue = VariableValue,
+                UserDefined = true
             };
             Variables.Add(model);
         }

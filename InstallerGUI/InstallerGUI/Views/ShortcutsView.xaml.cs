@@ -16,65 +16,19 @@ namespace InstallerGUI.Views
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SelectVariableClicked(object sender, RoutedEventArgs e)
         {
-            if (!(DataGridShortcuts.SelectedCells[0] is DataGridCellInfo cell)) return;
+            var selectedCell = DataGridShortcuts.SelectedCells?[0];
 
-            if (!(sender is Button button)) return;
+            var columnName = selectedCell?.Column.SortMemberPath;
+            var item = selectedCell?.Item as ShortcutModel;
+            var variable = VariablesComboBox.SelectedItem as VariableModel;
 
-            var columnMemberPath = cell.Column.SortMemberPath;
-
-            var item = default(ShortcutModel);
-            if (cell.Item.ToString().Equals("{NewItemPlaceholder}"))
-            {
-                AddNewRowButtonClick(null, null);
-                if (!(DataGridShortcuts.ItemsSource is ObservableCollection<ShortcutModel> collection)) return;
-
-                item = collection[collection.Count - 1];
-            }
-            else
-            {
-                item = cell.Item as ShortcutModel;
-                if (item == null) return;
-            }
-
-            var buttonContent = button.Content?.ToString();
-            switch (buttonContent)
-            {
-                case "Program Files":
-                    SetValue(item, columnMemberPath, "$PROGRAMFILES\\");
-                    break;
-
-                case "Windows":
-                    SetValue(item, columnMemberPath, "$WINDIR\\");
-                    break;
-
-                case "System32":
-                    SetValue(item, columnMemberPath, "$SYSDIR\\");
-                    break;
-
-                case "Temporary":
-                    SetValue(item, columnMemberPath, "$TEMP\\");
-                    break;
-
-                case "Desktop":
-                    SetValue(item, columnMemberPath, "$DESKTOP\\");
-                    break;
-
-                case "Destination Folder":
-                    SetValue(item, columnMemberPath, "$INSTDIR\\");
-                    break;
-
-                default:
-                    SetValue(item, columnMemberPath, "$INSTDIR\\");
-                    break;
-            }
-        }
-
-        private static void SetValue(ShortcutModel item, string columnMemberPath, string value)
-        {
             var type = typeof(ShortcutModel);
-            type.GetProperty(columnMemberPath).SetValue(item, value);
+            var propertyInfo = type.GetProperty(columnName);
+
+            var finalValue = variable.UserDefined ? "${" + variable.VariableName + "}\\" : "$" + variable.VariableName + "\\";
+            propertyInfo.SetValue(item, finalValue);
         }
 
         private void AddNewRowButtonClick(object sender, RoutedEventArgs e)

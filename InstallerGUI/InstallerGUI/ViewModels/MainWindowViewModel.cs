@@ -41,8 +41,8 @@ namespace InstallerGUI.ViewModels
         {
             GeneralViewModel = new GeneralViewModel();
             UserVariablesViewModel = new UserVariablesViewModel();
-            ShortcutsViewModel = new ShortcutsViewModel();
-            FilesViewModel = new FilesViewModel(GeneralViewModel, ShortcutsViewModel);
+            ShortcutsViewModel = new ShortcutsViewModel(UserVariablesViewModel);
+            FilesViewModel = new FilesViewModel(GeneralViewModel, ShortcutsViewModel, UserVariablesViewModel);
             RegistryViewModel = new RegistryViewModel();
             PagesViewModel = new PagesViewModel();
             SectionsViewModel = new SectionsViewModel(FilesViewModel, RegistryViewModel);

@@ -1,20 +1,37 @@
 ﻿using InstallerGUI.Contracts;
+using InstallerGUI.Infrastructure;
 using InstallerGUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 
 namespace InstallerGUI.ViewModels
 {
     public class ShortcutsViewModel : BaseViewModel, IHandleNsiData, IHandleCollectionItems
     {
+        private IHoldVariables _variablesHolder;
+
+        public IEnumerable<VariableModel> AllVariables { get { return _variablesHolder.AllVariables; } }
+
+        public ICommand RefreshVariablesListCommand { get; set; }
+
         public ObservableCollection<ShortcutModel> Shortcuts { get; set; }
 
-        public ShortcutsViewModel()
+        public ShortcutsViewModel(IHoldVariables variablesHolder)
         {
+            _variablesHolder = variablesHolder;
+
             Shortcuts = new ObservableCollection<ShortcutModel>();
+
+            RefreshVariablesListCommand = new CommandAction(RefreshVariablesListCommandAction);
+        }
+
+        private void RefreshVariablesListCommandAction()
+        {
+            OnPropertyChanged(nameof(AllVariables));
         }
 
         public string GetInstallDataToNsi()

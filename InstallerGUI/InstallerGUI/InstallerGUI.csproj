@@ -68,6 +68,7 @@
     <Compile Include="Contracts\IHandleFiles.cs" />
     <Compile Include="Contracts\IHandleRegistry.cs" />
     <Compile Include="Contracts\IHoldGeneralInformation.cs" />
+    <Compile Include="Contracts\IHoldVariables.cs" />
     <Compile Include="Contracts\IRequestOpenFileExplorer.cs" />
     <Compile Include="Infrastructure\CommandAction.cs" />
     <Compile Include="Models\InstallationFile.cs" />

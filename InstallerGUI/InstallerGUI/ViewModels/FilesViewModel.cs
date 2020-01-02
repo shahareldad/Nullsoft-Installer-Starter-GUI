@@ -13,19 +13,32 @@ namespace InstallerGUI.ViewModels
     public class FilesViewModel : BaseViewModel, IHandleFiles
     {
         private ShortcutsViewModel _shortcutsViewModel;
-
+        private IHoldVariables _variablesHolder;
         private IHoldGeneralInformation _generalInformation;
+
+        public IEnumerable<VariableModel> AllVariables { get { return _variablesHolder.AllVariables; } }
 
         public ObservableCollection<InstallationFile> SelectedFiles { get; set; }
 
+        public ICommand RefreshVariablesListCommand { get; set; }
+
         public ICommand RemoveFileCommand { get; set; }
 
-        public FilesViewModel(IHoldGeneralInformation generalInformation, ShortcutsViewModel shortcutsViewModel)
+        public FilesViewModel(IHoldGeneralInformation generalInformation, ShortcutsViewModel shortcutsViewModel, IHoldVariables variablesHolder)
         {
+            _variablesHolder = variablesHolder;
             _generalInformation = generalInformation;
-            SelectedFiles = new ObservableCollection<InstallationFile>();
-            RemoveFileCommand = new CommandAction<InstallationFile>(RemoveFileCommandAction);
             _shortcutsViewModel = shortcutsViewModel;
+
+            SelectedFiles = new ObservableCollection<InstallationFile>();
+
+            RemoveFileCommand = new CommandAction<InstallationFile>(RemoveFileCommandAction);
+            RefreshVariablesListCommand = new CommandAction(RefreshVariablesListCommandAction);
+        }
+
+        private void RefreshVariablesListCommandAction()
+        {
+            OnPropertyChanged(nameof(AllVariables));
         }
 
         public void RemoveFileCommandAction(InstallationFile parameter)

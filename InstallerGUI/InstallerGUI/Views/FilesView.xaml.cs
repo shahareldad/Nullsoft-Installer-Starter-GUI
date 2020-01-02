@@ -28,44 +28,19 @@ namespace InstallerGUI.Views
             fileHandler.HandleFiles(dialog.FileNames);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SelectVariableClicked(object sender, RoutedEventArgs e)
         {
-            if (!(DataGridSelectedFiles.SelectedItem is InstallationFile item)) return;
+            var selectedCell = DataGridSelectedFiles.SelectedCells?[0];
 
-            if (!(sender is Button button)) return;
+            var columnName = selectedCell?.Column.SortMemberPath;
+            var item = selectedCell?.Item as InstallationFile;
+            var variable = VariablesComboBox.SelectedItem as VariableModel;
 
-            var buttonContent = button.Content?.ToString();
+            var type = typeof(InstallationFile);
+            var propertyInfo = type.GetProperty(columnName);
 
-            switch (buttonContent)
-            {
-                case "Program Files":
-                    item.DestinationFolder = "$PROGRAMFILES\\";
-                    break;
-
-                case "Windows":
-                    item.DestinationFolder = "$WINDIR\\";
-                    break;
-
-                case "System32":
-                    item.DestinationFolder = "$SYSDIR\\";
-                    break;
-
-                case "Temporary":
-                    item.DestinationFolder = "$TEMP\\";
-                    break;
-
-                case "Desktop":
-                    item.DestinationFolder = "$DESKTOP\\";
-                    break;
-
-                case "Destination Folder":
-                    item.DestinationFolder = "$INSTDIR\\";
-                    break;
-
-                default:
-                    item.DestinationFolder = "$INSTDIR\\";
-                    break;
-            }
+            var finalValue = variable.UserDefined ? "${" + variable.VariableName + "}\\" : "$" + variable.VariableName + "\\";
+            propertyInfo.SetValue(item, finalValue);
         }
     }
 }
